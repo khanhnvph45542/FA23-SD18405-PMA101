@@ -9,19 +9,20 @@ package fa23.b2.sd18405.pma101;
  * @author Admin
  */
 public class sanpham1 {
-    private String ma,ten;
-    private int sl,gia;
-    private String trangTahi;
 
-    public sanpham1(String ma, String ten, int sl, int gia, String trangTahi) {
+    private String ma, ten;
+    private int sl;
+    private float gia;
+    private String mauSac;
+    private String trangThai;
+
+    public sanpham1(String ma, String ten, int sl, float gia, String mauSac, String trangThai) {
         this.ma = ma;
         this.ten = ten;
         this.sl = sl;
         this.gia = gia;
-        this.trangTahi = trangTahi;
-    }
-
-    public sanpham1() {
+        this.mauSac = mauSac;
+        this.trangThai = trangThai;
     }
 
     public String getMa() {
@@ -48,23 +49,32 @@ public class sanpham1 {
         this.sl = sl;
     }
 
-    public int getGia() {
+    public float getGia() {
         return gia;
     }
 
-    public void setGia(int gia) {
+    public void setGia(float gia) {
         this.gia = gia;
     }
 
-    public String getTrangTahi() {
-        return trangTahi;
+    public String getMauSac() {
+        return mauSac;
     }
 
-    public void setTrangTahi(String trangTahi) {
-        this.trangTahi = trangTahi;
+    public void setMauSac(String mauSac) {
+        this.mauSac = mauSac;
     }
 
-  public Integer thanhtien(){
-  return this.sl*this.gia;
-  }
+    public String getTrangThai() {
+        return trangThai;
+    }
+
+    public void setTrangThai(String trangThai) {
+        this.trangThai = trangThai;
+    }
+
+    public Float thanhtien() {
+        return this.sl * this.gia;
+    }
+
 }

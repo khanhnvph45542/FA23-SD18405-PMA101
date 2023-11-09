@@ -22,23 +22,34 @@ public class LTView extends javax.swing.JFrame {
 
     public LTView() {
         initComponents();
+        ArrayList<String> list = new ArrayList<>();
+        list.add("Màu Đỏ");
+        list.add("Màu Xám");
+        list.add("Màu Trắng");
+        list.add("Màu Xanh");
+        for (String string : list) {
+            txtMauSac.addItem(string);
+        }
 
     }
 
     void loadData(ArrayList<sanpham1> list) {
         defaultTableModel = (DefaultTableModel) tblsp.getModel();
         defaultTableModel.setRowCount(0);
+        int stt = 1;
         for (sanpham1 object : list) {
+
             defaultTableModel.addRow(new Object[]{
+                stt++,
                 object.getMa(),
                 object.getTen(),
                 object.getSl(),
                 object.getGia(),
-                object.getTrangTahi(),
+                object.getMauSac(),
+                object.getTrangThai(),
                 object.thanhtien()
             });
         }
-
     }
 
     /**
@@ -61,8 +72,8 @@ public class LTView extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         txtGia = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
-        rdMoi = new javax.swing.JRadioButton();
-        rdCu = new javax.swing.JRadioButton();
+        rdDaThanhToan = new javax.swing.JRadioButton();
+        rdChuaThanhToan = new javax.swing.JRadioButton();
         btnThem = new javax.swing.JButton();
         btnXoa = new javax.swing.JButton();
         btnTimKiem = new javax.swing.JButton();
@@ -70,6 +81,8 @@ public class LTView extends javax.swing.JFrame {
         tblsp = new javax.swing.JTable();
         btnCapNhat = new javax.swing.JButton();
         btnHienThi = new javax.swing.JButton();
+        jLabel6 = new javax.swing.JLabel();
+        txtMauSac = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -92,14 +105,19 @@ public class LTView extends javax.swing.JFrame {
 
         jLabel7.setText("Trạng Thái");
 
-        buttonGroup1.add(rdMoi);
-        rdMoi.setText("Da Thanh Toan");
-
-        buttonGroup1.add(rdCu);
-        rdCu.setText("Chua Thanh Toan");
-        rdCu.addActionListener(new java.awt.event.ActionListener() {
+        buttonGroup1.add(rdDaThanhToan);
+        rdDaThanhToan.setText("Đã Thanh Toán");
+        rdDaThanhToan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rdCuActionPerformed(evt);
+                rdDaThanhToanActionPerformed(evt);
+            }
+        });
+
+        buttonGroup1.add(rdChuaThanhToan);
+        rdChuaThanhToan.setText("Chưa Thanh Toán");
+        rdChuaThanhToan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rdChuaThanhToanActionPerformed(evt);
             }
         });
 
@@ -114,6 +132,11 @@ public class LTView extends javax.swing.JFrame {
         });
 
         btnXoa.setText("Xoá");
+        btnXoa.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnXoaMouseClicked(evt);
+            }
+        });
 
         btnTimKiem.setText("Tìm Kiếm");
         btnTimKiem.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -127,9 +150,14 @@ public class LTView extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Mã", "Tên", "Số Lượng", "Giá", "Trạng Thái", "Thành Tiền"
+                "Stt", "Mã", "Tên", "Số Lượng", "Giá", "Màu Sắc ", "Trạng Thái", "Thành Tiền"
             }
         ));
+        tblsp.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblspMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblsp);
 
         btnCapNhat.setText("Cập Nhật");
@@ -151,6 +179,8 @@ public class LTView extends javax.swing.JFrame {
             }
         });
 
+        jLabel6.setText("Màu Sắc ");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -162,18 +192,6 @@ public class LTView extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(160, 160, 160)
                                 .addComponent(txtma, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(107, 107, 107)
-                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(txtGia, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(105, 105, 105)
-                                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(rdMoi)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(rdCu))
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                 .addGroup(layout.createSequentialGroup()
                                     .addComponent(jLabel4)
@@ -185,8 +203,20 @@ public class LTView extends javax.swing.JFrame {
                                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGap(18, 18, 18)
-                                    .addComponent(txtTen, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(124, 124, 124)
+                                    .addComponent(txtTen, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(107, 107, 107)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel6)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(txtMauSac, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(txtGia, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(173, 173, 173)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(btnTimKiem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnCapNhat, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -194,12 +224,17 @@ public class LTView extends javax.swing.JFrame {
                             .addComponent(btnHienThi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnXoa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(28, 28, 28)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 529, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(250, 250, 250)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(25, Short.MAX_VALUE))
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(179, 179, 179)
+                        .addComponent(rdDaThanhToan)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(rdChuaThanhToan))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(27, 27, 27)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 577, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -228,22 +263,28 @@ public class LTView extends javax.swing.JFrame {
                         .addComponent(txtGia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(btnCapNhat))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnXoa)
-                    .addComponent(jLabel7)
-                    .addComponent(rdMoi)
-                    .addComponent(rdCu))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel6)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnXoa)
+                        .addComponent(txtMauSac, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel7)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(rdDaThanhToan)
+                        .addComponent(rdChuaThanhToan)))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void rdCuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdCuActionPerformed
+    private void rdChuaThanhToanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdChuaThanhToanActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_rdCuActionPerformed
+    }//GEN-LAST:event_rdChuaThanhToanActionPerformed
 
     private void txtTenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTenActionPerformed
         // TODO add your handling code here:
@@ -259,32 +300,34 @@ public class LTView extends javax.swing.JFrame {
         ArrayList<sanpham1> kq = ql.getlist();
         for (sanpham1 object : kq) {
             if (ma.equals(object.getMa())) {
-                JOptionPane.showMessageDialog(this, "Sp Da Ton Tai");
+                JOptionPane.showMessageDialog(this, "Sản Phẩm Đã Tồn Tại");
                 return;
             }
         }
         String ten = txtTen.getText();
         Integer sl = Integer.parseInt(txtsl.getText());
         Integer gia = Integer.parseInt(txtGia.getText());
+        String mau = txtMauSac.getSelectedItem().toString();
 
         String tt = "";
-        if (rdMoi.isSelected()) {
+        if (rdDaThanhToan.isSelected()) {
             tt = "Da Thanh Toan";
         } else {
             tt = "Chua Thanh Toan";
         }
-        sanpham1 sp = new sanpham1(ma, ten, sl, gia, tt);
+        sanpham1 sp = new sanpham1(ma, ten, sl, gia, mau, tt);
         Boolean add = ql.add(sp);
         if (add) {
-            JOptionPane.showMessageDialog(this, "Them TT");
+            JOptionPane.showMessageDialog(this, "Thêm Thành Công");
             loadData(ql.getlist());
         }
     }//GEN-LAST:event_btnThemMouseClicked
 
     private void btnTimKiemMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnTimKiemMouseClicked
         // TODO add your handling code here:
-        Integer gia = Integer.parseInt(txtGia.getText());
-        ArrayList<sanpham1> tim = ql.tim(gia);
+//        Integer gia = Integer.parseInt(txtGia.getText());
+        String ma = txtma.getText();
+        ArrayList<sanpham1> tim = ql.tim(ma);
         loadData(tim);
     }//GEN-LAST:event_btnTimKiemMouseClicked
 
@@ -292,27 +335,20 @@ public class LTView extends javax.swing.JFrame {
         // TODO add your handling code here:
         int row = tblsp.getSelectedRow();
         String ma = txtma.getText();
-        ArrayList<sanpham1> kq = ql.getlist();
-        for (sanpham1 object : kq) {
-            if (ma.equals(object.getMa())) {
-                JOptionPane.showMessageDialog(this, "Sp Da Ton Tai");
-                return;
-            }
-        }
         String ten = txtTen.getText();
         Integer sl = Integer.parseInt(txtsl.getText());
-        Integer gia = Integer.parseInt(txtGia.getText());
-
+        float gia = Float.parseFloat(txtGia.getText());
+        String mau = txtMauSac.getSelectedItem().toString();
         String tt = "";
-        if (rdMoi.isSelected()) {
-            tt = "Da Thanh Toan";
+        if (rdDaThanhToan.isSelected()) {
+            tt = "Đã Thanh Toán";
         } else {
-            tt = "Chua Thanh Toan";
+            tt = "Chưa Thanh Toán";
         }
-        sanpham1 sp = new sanpham1(ma, ten, sl, gia, tt);
+        sanpham1 sp = new sanpham1(ma, ten, sl, gia, mau, tt);
         Boolean up = ql.update(row, sp);
         if (up) {
-            JOptionPane.showMessageDialog(this, "UP TT");
+            JOptionPane.showMessageDialog(this, "Cập Nhật Thành Công");
             loadData(ql.getlist());
         }
     }//GEN-LAST:event_btnCapNhatMouseClicked
@@ -326,6 +362,43 @@ public class LTView extends javax.swing.JFrame {
     private void btnCapNhatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCapNhatActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnCapNhatActionPerformed
+
+    private void btnXoaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnXoaMouseClicked
+        // TODO add your handling code here:
+        String ma = txtma.getText();
+        if (ma.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Khong Bo Trong Ma");
+        } else {
+            ArrayList<sanpham1> delete = ql.xoa(ma);
+            JOptionPane.showMessageDialog(this, "Xoa Thanh Cong");
+            loadData(delete);
+        }
+    }//GEN-LAST:event_btnXoaMouseClicked
+
+    private void tblspMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblspMouseClicked
+        // TODO add your handling code here:
+        int i = tblsp.getSelectedRow();
+        String ma = (String) tblsp.getValueAt(i, 1);
+        txtma.setText(ma);
+        String ten = (String) tblsp.getValueAt(i, 2);
+        txtTen.setText(ten);
+        Integer soLuong = (Integer) tblsp.getValueAt(i, 3);
+        txtsl.setText(String.valueOf(soLuong));
+        float gia = (float) tblsp.getValueAt(i, 4);
+        txtGia.setText(String.valueOf(gia));
+        String mau = (String) tblsp.getValueAt(i, 5);
+        txtMauSac.setSelectedItem(mau);
+        String trangThai = (String) tblsp.getValueAt(i, 6);
+        if (trangThai.equals("Đã Thanh Toán")) {
+            rdDaThanhToan.setSelected(true);
+        }else{
+            rdChuaThanhToan.setSelected(true);
+        }
+    }//GEN-LAST:event_tblspMouseClicked
+
+    private void rdDaThanhToanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdDaThanhToanActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_rdDaThanhToanActionPerformed
 
     /**
      * @param args the command line arguments
@@ -375,12 +448,14 @@ public class LTView extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JRadioButton rdCu;
-    private javax.swing.JRadioButton rdMoi;
+    private javax.swing.JRadioButton rdChuaThanhToan;
+    private javax.swing.JRadioButton rdDaThanhToan;
     private javax.swing.JTable tblsp;
     private javax.swing.JTextField txtGia;
+    private javax.swing.JComboBox<String> txtMauSac;
     private javax.swing.JTextField txtTen;
     private javax.swing.JTextField txtma;
     private javax.swing.JTextField txtsl;
