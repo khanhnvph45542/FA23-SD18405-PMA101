@@ -23,8 +23,9 @@ public class LTView extends javax.swing.JFrame {
     public LTView() {
         initComponents();
         ArrayList<String> list = new ArrayList<>();
-        list.add("Màu Đỏ");
-        list.add("Màu Xám");
+        list.add("");
+        list.add("Màu Đỏ"); 
+        list.add("Màu Xám"); 
         list.add("Màu Trắng");
         list.add("Màu Xanh");
         for (String string : list) {
@@ -297,24 +298,74 @@ public class LTView extends javax.swing.JFrame {
     private void btnThemMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnThemMouseClicked
         // TODO add your handling code here:
         String ma = txtma.getText();
+        if (ma.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Mã Không Bỏ Trống");
+            return;
+        }
         ArrayList<sanpham1> kq = ql.getlist();
+
         for (sanpham1 object : kq) {
             if (ma.equals(object.getMa())) {
                 JOptionPane.showMessageDialog(this, "Sản Phẩm Đã Tồn Tại");
                 return;
             }
         }
-        String ten = txtTen.getText();
-        Integer sl = Integer.parseInt(txtsl.getText());
-        Integer gia = Integer.parseInt(txtGia.getText());
-        String mau = txtMauSac.getSelectedItem().toString();
 
+        String ten = txtTen.getText();
+        if (ten.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Tên Không Bỏ Trống");
+            return;
+        }
+        String soLuong = txtsl.getText();
+        if (soLuong.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Số Lượng Không Bỏ Trống");
+            return;
+        }
+
+        try {
+            Integer sl = Integer.parseInt(txtsl.getText());
+            Integer.valueOf(sl);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Số Lượng Phải Là Số");
+            return;
+        }
+
+        Integer sl = Integer.parseInt(txtsl.getText());
+        
+        String Gia = txtGia.getText();
+        if (Gia.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Giá Không Bỏ Trống");
+            return;
+        }
+        try {
+            Float gia = Float.parseFloat(txtGia.getText());
+            Float.valueOf(gia);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Giá Phải Là Số");
+            return;
+        }
+
+        Float gia = Float.parseFloat(txtGia.getText());
+        String mau = txtMauSac.getSelectedItem().toString();
+        if (mau.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Màu Sắc Không Bỏ Trống");
+            return;
+        }
+        
         String tt = "";
+//        if (rdChuaThanhToan.) {
+//            JOptionPane.showMessageDialog(this, "Trạng Thái Không Bỏ Trống");
+//            return;
+//        }
         if (rdDaThanhToan.isSelected()) {
             tt = "Da Thanh Toan";
-        } else {
+        } else if(rdChuaThanhToan.isSelected()){
             tt = "Chua Thanh Toan";
+        }else{
+            JOptionPane.showMessageDialog(this, "Trạng Thái Không Bỏ Trống");
+            return;
         }
+        
         sanpham1 sp = new sanpham1(ma, ten, sl, gia, mau, tt);
         Boolean add = ql.add(sp);
         if (add) {
@@ -327,6 +378,10 @@ public class LTView extends javax.swing.JFrame {
         // TODO add your handling code here:
 //        Integer gia = Integer.parseInt(txtGia.getText());
         String ma = txtma.getText();
+        if (ma.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Mã Không Bỏ Trống");
+            return;
+        }
         ArrayList<sanpham1> tim = ql.tim(ma);
         loadData(tim);
     }//GEN-LAST:event_btnTimKiemMouseClicked
@@ -391,7 +446,7 @@ public class LTView extends javax.swing.JFrame {
         String trangThai = (String) tblsp.getValueAt(i, 6);
         if (trangThai.equals("Đã Thanh Toán")) {
             rdDaThanhToan.setSelected(true);
-        }else{
+        } else {
             rdChuaThanhToan.setSelected(true);
         }
     }//GEN-LAST:event_tblspMouseClicked
