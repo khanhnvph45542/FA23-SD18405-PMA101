@@ -24,8 +24,8 @@ public class LTView extends javax.swing.JFrame {
         initComponents();
         ArrayList<String> list = new ArrayList<>();
         list.add("");
-        list.add("Màu Đỏ"); 
-        list.add("Màu Xám"); 
+        list.add("Màu Đỏ");
+        list.add("Màu Xám");
         list.add("Màu Trắng");
         list.add("Màu Xanh");
         for (String string : list) {
@@ -331,7 +331,7 @@ public class LTView extends javax.swing.JFrame {
         }
 
         Integer sl = Integer.parseInt(txtsl.getText());
-        
+
         String Gia = txtGia.getText();
         if (Gia.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Giá Không Bỏ Trống");
@@ -351,7 +351,7 @@ public class LTView extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Màu Sắc Không Bỏ Trống");
             return;
         }
-        
+
         String tt = "";
 //        if (rdChuaThanhToan.) {
 //            JOptionPane.showMessageDialog(this, "Trạng Thái Không Bỏ Trống");
@@ -359,13 +359,13 @@ public class LTView extends javax.swing.JFrame {
 //        }
         if (rdDaThanhToan.isSelected()) {
             tt = "Da Thanh Toan";
-        } else if(rdChuaThanhToan.isSelected()){
+        } else if (rdChuaThanhToan.isSelected()) {
             tt = "Chua Thanh Toan";
-        }else{
+        } else {
             JOptionPane.showMessageDialog(this, "Trạng Thái Không Bỏ Trống");
             return;
         }
-        
+
         sanpham1 sp = new sanpham1(ma, ten, sl, gia, mau, tt);
         Boolean add = ql.add(sp);
         if (add) {
