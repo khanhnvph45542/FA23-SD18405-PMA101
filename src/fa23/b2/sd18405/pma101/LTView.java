@@ -39,7 +39,6 @@ public class LTView extends javax.swing.JFrame {
         defaultTableModel.setRowCount(0);
         int stt = 1;
         for (sanpham1 object : list) {
-
             defaultTableModel.addRow(new Object[]{
                 stt++,
                 object.getMa(),
@@ -331,7 +330,10 @@ public class LTView extends javax.swing.JFrame {
         }
 
         Integer sl = Integer.parseInt(txtsl.getText());
-
+        if (sl<=0) {
+           JOptionPane.showMessageDialog(this,"Số Lượng Lớn Hơn 0");
+           return;
+        }
         String Gia = txtGia.getText();
         if (Gia.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Giá Không Bỏ Trống");
@@ -346,6 +348,10 @@ public class LTView extends javax.swing.JFrame {
         }
 
         Float gia = Float.parseFloat(txtGia.getText());
+        if (gia<=0) {
+           JOptionPane.showMessageDialog(this,"Giá Lớn Hơn 0");
+           return;
+        }
         String mau = txtMauSac.getSelectedItem().toString();
         if (mau.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Màu Sắc Không Bỏ Trống");
@@ -390,16 +396,72 @@ public class LTView extends javax.swing.JFrame {
         // TODO add your handling code here:
         int row = tblsp.getSelectedRow();
         String ma = txtma.getText();
-        String ten = txtTen.getText();
-        Integer sl = Integer.parseInt(txtsl.getText());
-        float gia = Float.parseFloat(txtGia.getText());
-        String mau = txtMauSac.getSelectedItem().toString();
-        String tt = "";
-        if (rdDaThanhToan.isSelected()) {
-            tt = "Đã Thanh Toán";
-        } else {
-            tt = "Chưa Thanh Toán";
+        if (ma.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Mã Không Bỏ Trống");
+            return;
         }
+        String ten = txtTen.getText();
+        if (ten.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Tên Không Bỏ Trống");
+            return;
+        }
+        String soLuong = txtsl.getText();
+        if (soLuong.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Số Lượng Không Bỏ Trống");
+            return;
+        }
+
+        try {
+            Integer sl = Integer.parseInt(txtsl.getText());
+            Integer.valueOf(sl);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Số Lượng Phải Là Số");
+            return;
+        }
+
+        Integer sl = Integer.parseInt(txtsl.getText());
+        if (sl<=0) {
+           JOptionPane.showMessageDialog(this,"Số Lượng Lớn Hơn 0");
+           return;
+        }
+        String Gia = txtGia.getText();
+        if (Gia.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Giá Không Bỏ Trống");
+            return;
+        }
+        try {
+            Float gia = Float.parseFloat(txtGia.getText());
+            Float.valueOf(gia);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Giá Phải Là Số");
+            return;
+        }
+
+        Float gia = Float.parseFloat(txtGia.getText());
+        if (gia<=0) {
+           JOptionPane.showMessageDialog(this,"Giá Lớn Hơn 0");
+           return;
+        }
+        String mau = txtMauSac.getSelectedItem().toString();
+        if (mau.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Màu Sắc Không Bỏ Trống");
+            return;
+        }
+
+        String tt = "";
+//        if (rdChuaThanhToan.) {
+//            JOptionPane.showMessageDialog(this, "Trạng Thái Không Bỏ Trống");
+//            return;
+//        }
+        if (rdDaThanhToan.isSelected()) {
+            tt = "Da Thanh Toan";
+        } else if (rdChuaThanhToan.isSelected()) {
+            tt = "Chua Thanh Toan";
+        } else {
+            JOptionPane.showMessageDialog(this, "Trạng Thái Không Bỏ Trống");
+            return;
+        }
+
         sanpham1 sp = new sanpham1(ma, ten, sl, gia, mau, tt);
         Boolean up = ql.update(row, sp);
         if (up) {
