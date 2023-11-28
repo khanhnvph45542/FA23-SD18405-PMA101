@@ -4,6 +4,8 @@
  */
 package fa23.b2.sd18405.pma101;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author KhanhCT
@@ -117,14 +119,27 @@ public class DangNhap extends javax.swing.JFrame {
     private void btnDangNhapMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDangNhapMouseClicked
         // TODO add your handling code here:
         String ten = txtTen.getText();
-        String matKhau = txtMatKhau.getText();
         
+        String matKhau = txtMatKhau.getText();
+        if (ten.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Mời Nhập Tên Đăng Nhập");
+            return;
+            
+        }
+        if (matKhau.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Mời Nhập Mật Khẩu");
+            return;
+            
+        }
         if (ten.equals("TheKing")&&matKhau.equals("12345")) {
             LTView lTView = new LTView();
             this.hide();
             lTView.setVisible(true);
             lTView.setLocationRelativeTo(null);
             this.dispose();
+        }else{
+            JOptionPane.showMessageDialog(this, "Bạn Nhập Sai Tên Và Mật Khẩu");
+            return;
         }
         
     }//GEN-LAST:event_btnDangNhapMouseClicked
