@@ -15,6 +15,9 @@ public class sanpham1 {
     private float gia;
     private String mauSac;
     private String trangThai;
+    private String name;
+    private String pass;
+    
 
     public sanpham1(String ma, String ten, int sl, float gia, String mauSac, String trangThai) {
         this.ma = ma;
@@ -23,6 +26,27 @@ public class sanpham1 {
         this.gia = gia;
         this.mauSac = mauSac;
         this.trangThai = trangThai;
+    }
+
+    public sanpham1(String name, String pass) {
+        this.name = name;
+        this.pass = pass;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getPass() {
+        return pass;
+    }
+
+    public void setPass(String pass) {
+        this.pass = pass;
     }
 
     public String getMa() {

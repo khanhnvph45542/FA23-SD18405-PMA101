@@ -15,6 +15,8 @@ public class DangNhap extends javax.swing.JFrame {
     /**
      * Creates new form DangNhap
      */
+    QuanLyDangNhap quanLyDangNhap = new QuanLyDangNhap();
+
     public DangNhap() {
         initComponents();
     }
@@ -28,6 +30,7 @@ public class DangNhap extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jButton1 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -35,6 +38,10 @@ public class DangNhap extends javax.swing.JFrame {
         txtMatKhau = new javax.swing.JPasswordField();
         jLabel1 = new javax.swing.JLabel();
         btnDangNhap = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+
+        jButton1.setText("jButton1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -84,6 +91,16 @@ public class DangNhap extends javax.swing.JFrame {
             }
         });
 
+        jLabel4.setText("Nếu Bạn Chưa Có Tài Khoản Thì Hãy Đăng Ký: ");
+
+        jLabel5.setForeground(new java.awt.Color(51, 51, 255));
+        jLabel5.setText("Đăng Ký");
+        jLabel5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel5MouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -97,8 +114,13 @@ public class DangNhap extends javax.swing.JFrame {
                         .addContainerGap()
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(142, 142, 142)
-                        .addComponent(btnDangNhap)))
+                        .addGap(143, 143, 143)
+                        .addComponent(btnDangNhap))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(50, 50, 50)
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(15, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -108,9 +130,13 @@ public class DangNhap extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addGap(28, 28, 28)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(27, 27, 27)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel5))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
                 .addComponent(btnDangNhap)
-                .addContainerGap(35, Short.MAX_VALUE))
+                .addGap(28, 28, 28))
         );
 
         pack();
@@ -119,30 +145,51 @@ public class DangNhap extends javax.swing.JFrame {
     private void btnDangNhapMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDangNhapMouseClicked
         // TODO add your handling code here:
         String ten = txtTen.getText();
-        
+
         String matKhau = txtMatKhau.getText();
         if (ten.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Mời Nhập Tên Đăng Nhập");
             return;
-            
+
         }
         if (matKhau.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Mời Nhập Mật Khẩu");
             return;
-            
+
         }
-        if (ten.equals("TheKing")&&matKhau.equals("12345")) {
-            LTView lTView = new LTView();
-            this.hide();
-            lTView.setVisible(true);
-            lTView.setLocationRelativeTo(null);
-            this.dispose();
-        }else{
-            JOptionPane.showMessageDialog(this, "Bạn Nhập Sai Tên Và Mật Khẩu");
+        try {
+            for (sanpham1 sanPham : quanLyDangNhap.getAll()) {
+                if (ten.equals(sanPham.getName()) && matKhau.equals(sanPham.getPass())) {
+                    LTView lTView = new LTView();
+                    this.hide();
+                    lTView.setVisible(true);
+                    lTView.setLocationRelativeTo(null);
+                    this.dispose();
+                    return;
+                } else if (!ten.equals(sanPham.getName())) {
+                    JOptionPane.showMessageDialog(this, "Bạn Nhập Sai Name");
+                    return;
+                } else {
+                    JOptionPane.showMessageDialog(this, "Bạn Nhập Sai PassWord");
+                    return;
+                }
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Bạn Nhập Sai Name Và PassWord");
             return;
         }
-        
+
+
     }//GEN-LAST:event_btnDangNhapMouseClicked
+
+    private void jLabel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseClicked
+        // TODO add your handling code here:
+        DangKi dangKi = new DangKi();
+        this.hide();
+        dangKi.setVisible(true);
+        dangKi.setLocationRelativeTo(null);
+        this.dispose();
+    }//GEN-LAST:event_jLabel5MouseClicked
 
     /**
      * @param args the command line arguments
@@ -181,9 +228,12 @@ public class DangNhap extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDangNhap;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPasswordField txtMatKhau;
     private javax.swing.JTextField txtTen;
