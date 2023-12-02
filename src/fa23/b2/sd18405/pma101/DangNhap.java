@@ -158,21 +158,15 @@ public class DangNhap extends javax.swing.JFrame {
 
         }
         try {
-            for (sanpham1 sanPham : quanLyDangNhap.getAll()) {
-                if (ten.equals(sanPham.getName()) && matKhau.equals(sanPham.getPass())) {
+            for (int i = 0; i <= quanLyDangNhap.getAll().size(); i++) {
+                if (quanLyDangNhap.getAll().get(i).getName().equals(ten) &&quanLyDangNhap.getAll().get(i).getPass().equals(matKhau)) {
                     LTView lTView = new LTView();
                     this.hide();
                     lTView.setVisible(true);
                     lTView.setLocationRelativeTo(null);
                     this.dispose();
                     return;
-                } else if (!ten.equals(sanPham.getName())) {
-                    JOptionPane.showMessageDialog(this, "Bạn Nhập Sai Name");
-                    return;
-                } else {
-                    JOptionPane.showMessageDialog(this, "Bạn Nhập Sai PassWord");
-                    return;
-                }
+                } 
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Bạn Nhập Sai Name Và PassWord");

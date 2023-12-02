@@ -162,8 +162,30 @@ public class DangKi extends javax.swing.JFrame {
     private void btnDangKiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDangKiMouseClicked
         // TODO add your handling code here:
         String name = txtTen.getText();
+        if (name.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Không Bỏ Trống Tên Đăng Nhập");
+            return;
+
+        }
+        for (sanpham1 object : quanLyDangNhap.getAll()) {
+            if (object.getName().equals(name)) {
+                JOptionPane.showMessageDialog(this, "Không Được Trùng Tên Đăng Nhập");
+                return;
+
+            }
+        }
         String pass = txtMatKhau.getText();
+        if (pass.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Không Bỏ Trống Mật Khẩu");
+            return;
+
+        }
         String NhapLai = txtNhapLaiMK.getText();
+        if (NhapLai.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Không Bỏ Trống Nhập Lại Mật Khẩu");
+            return;
+
+        }
         if (pass.equals(NhapLai)) {
             quanLyDangNhap.insert(name, pass);
             JOptionPane.showMessageDialog(this, "Bạn Đăng Ký Thành Công");
@@ -172,6 +194,10 @@ public class DangKi extends javax.swing.JFrame {
             dangNhap.setVisible(true);
             dangNhap.setLocationRelativeTo(null);
             this.dispose();
+        } else {
+            JOptionPane.showMessageDialog(this, "Mât Khẩu Phải Giống Nhập Lại Mật Khẩu");
+            return;
+
         }
 
     }//GEN-LAST:event_btnDangKiMouseClicked
