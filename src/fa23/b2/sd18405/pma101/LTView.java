@@ -330,9 +330,9 @@ public class LTView extends javax.swing.JFrame {
         }
 
         Integer sl = Integer.parseInt(txtsl.getText());
-        if (sl<=0) {
-           JOptionPane.showMessageDialog(this,"Số Lượng Lớn Hơn 0");
-           return;
+        if (sl <= 0) {
+            JOptionPane.showMessageDialog(this, "Số Lượng Lớn Hơn 0");
+            return;
         }
         String Gia = txtGia.getText();
         if (Gia.isEmpty()) {
@@ -348,9 +348,9 @@ public class LTView extends javax.swing.JFrame {
         }
 
         Float gia = Float.parseFloat(txtGia.getText());
-        if (gia<=0) {
-           JOptionPane.showMessageDialog(this,"Giá Lớn Hơn 0");
-           return;
+        if (gia <= 0) {
+            JOptionPane.showMessageDialog(this, "Giá Lớn Hơn 0");
+            return;
         }
         String mau = txtMauSac.getSelectedItem().toString();
         if (mau.isEmpty()) {
@@ -388,8 +388,19 @@ public class LTView extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Mã Không Bỏ Trống");
             return;
         }
-        ArrayList<sanpham1> tim = ql.tim(ma);
-        loadData(tim);
+        try {
+            for (int i = 0; i <= ql.getlist().size(); i++) {
+                if (ql.getlist().get(i).getMa().equals(ma)) {
+                    ArrayList<sanpham1> tim = ql.tim(ma);
+                    loadData(tim);
+                    return;
+                }
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Không Có Nhân Viên Này");
+            return;
+        }
+
     }//GEN-LAST:event_btnTimKiemMouseClicked
 
     private void btnCapNhatMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCapNhatMouseClicked
@@ -420,9 +431,9 @@ public class LTView extends javax.swing.JFrame {
         }
 
         Integer sl = Integer.parseInt(txtsl.getText());
-        if (sl<=0) {
-           JOptionPane.showMessageDialog(this,"Số Lượng Lớn Hơn 0");
-           return;
+        if (sl <= 0) {
+            JOptionPane.showMessageDialog(this, "Số Lượng Lớn Hơn 0");
+            return;
         }
         String Gia = txtGia.getText();
         if (Gia.isEmpty()) {
@@ -438,9 +449,9 @@ public class LTView extends javax.swing.JFrame {
         }
 
         Float gia = Float.parseFloat(txtGia.getText());
-        if (gia<=0) {
-           JOptionPane.showMessageDialog(this,"Giá Lớn Hơn 0");
-           return;
+        if (gia <= 0) {
+            JOptionPane.showMessageDialog(this, "Giá Lớn Hơn 0");
+            return;
         }
         String mau = txtMauSac.getSelectedItem().toString();
         if (mau.isEmpty()) {
@@ -485,11 +496,21 @@ public class LTView extends javax.swing.JFrame {
         String ma = txtma.getText();
         if (ma.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Khong Bo Trong Ma");
-        } else {
-            ArrayList<sanpham1> delete = ql.xoa(ma);
-            JOptionPane.showMessageDialog(this, "Xoa Thanh Cong");
-            loadData(delete);
         }
+        try {
+            for (int i = 0; i <= ql.getlist().size(); i++) {
+                if (ql.getlist().get(i).getMa().equals(ma)) {
+                    ArrayList<sanpham1> delete = ql.xoa(ma);
+                    JOptionPane.showMessageDialog(this, "Xoa Thanh Cong");
+                    loadData(delete);
+                    return;
+                }
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Không Có Sản Phẩm Này");
+        }
+
+
     }//GEN-LAST:event_btnXoaMouseClicked
 
     private void tblspMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblspMouseClicked
