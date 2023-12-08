@@ -397,7 +397,7 @@ public class LTView extends javax.swing.JFrame {
                 }
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Không Có Nhân Viên Này");
+            JOptionPane.showMessageDialog(this, "Không Có Sản Phẩm Này");
             return;
         }
 
@@ -406,6 +406,11 @@ public class LTView extends javax.swing.JFrame {
     private void btnCapNhatMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCapNhatMouseClicked
         // TODO add your handling code here:
         int row = tblsp.getSelectedRow();
+        if (row==-1) {
+            JOptionPane.showMessageDialog(this, "Phải Chọn Dòng Để Cập Nhật");
+            return;
+        }
+        
         String ma = txtma.getText();
         if (ma.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Mã Không Bỏ Trống");
@@ -485,6 +490,12 @@ public class LTView extends javax.swing.JFrame {
         // TODO add your handling code here:
         ArrayList<sanpham1> list = ql.getlist();
         loadData(list);
+        txtma.setText("");
+        txtTen.setText("");
+        txtMauSac.setSelectedItem("");
+        txtGia.setText("");
+        txtsl.setText("");
+        buttonGroup1.clearSelection();
     }//GEN-LAST:event_btnHienThiMouseClicked
 
     private void btnCapNhatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCapNhatActionPerformed
